@@ -1,12 +1,15 @@
-
-
 # RPI-webcam.collector
 Detect Webcams by itself and publish it to website
 
 ## install ##
+install all needed packages to prepare the software environtent of your Raspberry Pi:
+```bash
+sudo apt-get update && sudo apt-get upgrade && sudo apt-get install python3-pip git ffmpeg
+sudo pip3 install getmac
+```
+and this tool itself:
 ```bash
 cd /opt
-#sudo apt-get install python3-pip && sudo pip3 install getmac
 sudo git clone https://github.com/Starwhooper/RPi-webcam-collector
 sudo chmod +x /opt/RPi-webcam-collector/collect.py
 sudo touch /var/www/html/webcam.html && sudo chmod 777 /var/www/html/webcam.html
