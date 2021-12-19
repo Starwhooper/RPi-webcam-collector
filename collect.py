@@ -72,12 +72,9 @@ for ipchangepart in range(0,255):
 
 #            if str(mac[:8]) == "fc:fe:ad":
             if str(mac[:8]) == "e0:b9:4d":
-                htmlstring += '<tr><td>Digoo ' + mac[9:] + '<br/><a href="http://' + ip + ':81/videostream.cgi?loginuse=admin&loginpas=">IP: ' + ip + '</a></td></tr>\n'
-                #videoin = 'rtsp://' + ip + ':10554'
-                #videoin = 'http://192.168.179.129:81/videostream.cgi?loginuse=admin&loginpas='
+                htmlstring += '<tr><td>Digoo ' + mac[9:] + '<br/><a href="http://' + ip + ':81/videostream.cgi?loginuse=' + user + '&loginpas=' + password + '">IP: ' + ip + '</a></td></tr>\n'
                 videoin = 'http://' + ip + ':81/snapshot.cgi?user=' + user + '&pwd=' + password
                 videoout = '/var/www/html/camimages/' + mac.replace(':', '') + '-output.jpg'
-                #os.system('ffmpeg -y -i ' + videoin + ' -ss 5 -vf scale=600:-1 -frames:v 1 ' + videoout)
                 os.system('wget "' + videoin + '" -O ' + videoout)
                 htmlstring += '<tr><td><img src="camimages/' + mac.replace(':', '') + '-output.jpg"></td></tr>\n'
 
