@@ -56,26 +56,35 @@ for ipchangepart in range(0,255):
         try: password = cf['camdevices'][mac]['password']
         except: password = ''
         if len(str(mac)) == 17:
+            print('----------------------------------------------------------------------------------------------')
+            print('next:                               ' + str(mac))
             if str(mac[:8]) == "f0:00:00":
                 htmlstring += '<tr><td>SV3C Camera (A-Series) ' + mac[9:] + '<br/>IP: <a href="http://' + ip + '">IP: ' + ip + '</a></td></tr>\n'
                 videoin = 'rtsp://' + ip + '/stream1'
                 videoout = '/var/www/html/camimages/' + mac.replace(':', '') + '-output.jpg'
-                os.system('ffmpeg -y -i ' + videoin + ' -ss 5 -vf scale=600:-1 -frames:v 1 ' + videoout)
+                os.system('ffmpeg -hide_banner -loglevel error -y -i ' + videoin + ' -ss 5 -vf scale=600:-1 -frames:v 1 ' + videoout)
                 htmlstring += '<tr><td><img src="camimages/' + mac.replace(':', '') + '-output.jpg"></td></tr>\n'
 
             if str(mac[:8]) == "00:e0:59":
                 htmlstring += '<tr><td>SV3C Camera (HX-Series) ' + mac[9:] + '<br/><a href="http://' + ip + '/web/admin.html">IP: ' + ip + '</a></td></tr>\n'
                 videoin = 'rtsp://' + ip + ':554/12'
                 videoout = '/var/www/html/camimages/' + mac.replace(':', '') + '-output.jpg'
-                os.system('ffmpeg -y -i ' + videoin + ' -ss 5 -vf scale=600:-1 -frames:v 1 ' + videoout)
+                os.system('ffmpeg -hide_banner -loglevel error -y -i ' + videoin + ' -ss 5 -vf scale=600:-1 -frames:v 1 ' + videoout)
                 htmlstring += '<tr><td><img src="camimages/' + mac.replace(':', '') + '-output.jpg"></td></tr>\n'
 
-#            if str(mac[:8]) == "fc:fe:ad":
             if str(mac[:8]) == "e0:b9:4d":
                 htmlstring += '<tr><td>Digoo ' + mac[9:] + '<br/><a href="http://' + ip + ':81/videostream.cgi?loginuse=' + user + '&loginpas=' + password + '">IP: ' + ip + '</a></td></tr>\n'
                 videoin = 'http://' + ip + ':81/snapshot.cgi?user=' + user + '&pwd=' + password
                 videoout = '/var/www/html/camimages/' + mac.replace(':', '') + '-output.jpg'
                 os.system('wget "' + videoin + '" -O ' + videoout)
+                htmlstring += '<tr><td><img src="camimages/' + mac.replace(':', '') + '-output.jpg"></td></tr>\n'
+            
+            if str(mac[:8]) == "34:94:54":
+                htmlstring += '<tr><td>ESP32-CAM ' + mac[9:] + '<br/><a href="http://' + ip + ':81/stream">IP: ' + ip + '</a></td></tr>\n'
+                videoin = 'http://' + ip + ':81/stream'
+                videoout = '/var/www/html/camimages/' + mac.replace(':', '') + '-output.jpg'
+                #os.system('wget "' + videoin + '" -O ' + videoout)
+                os.system('ffmpeg -hide_banner -loglevel error -y -i ' + videoin + ' -ss 5 -vf scale=600:-1 -frames:v 1 ' + videoout)
                 htmlstring += '<tr><td><img src="camimages/' + mac.replace(':', '') + '-output.jpg"></td></tr>\n'
 
 htmlstring += '</table>'
