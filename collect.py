@@ -27,7 +27,7 @@ def camoutput(cammodell,mac,camlink,ip,imgsrc,column):
  elif column == 3:
   output += '<td>'
 
- output += cammodell + ' ' + mac[9:] + ' <a href="' + camlink + '">IP: ' + ip + '</a><img src="' + imgsrc + '">'
+ output += cammodell + ' ' + mac[9:] + ' <a href="' + camlink + '">IP: ' + ip + '<img src="' + imgsrc + '"></a>'
 
  if column == 1:
   output += '</td>'
